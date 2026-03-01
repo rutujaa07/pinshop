@@ -26,7 +26,7 @@
         --mid: #5c4a42;
         --light-text: #9e8a80;
         --accent: #e8b4a0;
-        --card-bg: #ffffff;
+        --card-bg: #fff;
         --green: #27ae60;
         --orange: #f39c12;
         --border: #e8e0d8;
@@ -43,7 +43,7 @@
         overflow-x: hidden;
       }
 
-      /* ── NAV ── */
+      /* NAV */
       nav {
         background: #fff;
         padding: 14px 32px;
@@ -138,7 +138,7 @@
         box-shadow: 0 6px 20px rgba(230, 0, 35, 0.35);
       }
 
-      /* ── HERO ── */
+      /* HERO */
       .hero {
         background: linear-gradient(
           135deg,
@@ -209,7 +209,7 @@
         color: var(--rust);
       }
 
-      /* ── FILTERS ── */
+      /* FILTERS */
       .filter-bar {
         padding: 28px 32px 8px;
         display: flex;
@@ -259,7 +259,7 @@
         color: var(--light-text);
       }
 
-      /* ── MASONRY ── */
+      /* MASONRY */
       .masonry {
         columns: 5;
         column-gap: 16px;
@@ -290,7 +290,7 @@
           padding: 50px 20px;
         }
         .filter-bar {
-          padding: 16px 16px 8px;
+          padding: 16px;
         }
         .section-header {
           padding: 16px 16px 4px;
@@ -306,7 +306,7 @@
         }
       }
 
-      /* ── PIN CARD ── */
+      /* PIN CARD */
       .pin-card {
         break-inside: avoid;
         margin-bottom: 16px;
@@ -337,13 +337,13 @@
       .pin-card:hover .overlay {
         opacity: 1;
       }
-      .pin-card:hover .btn-shop,
+      .pin-card:hover .btn-shop {
+        transform: translateY(0);
+        opacity: 1;
+      }
       .pin-card:hover .save-btn,
       .pin-card:hover .delete-btn {
         opacity: 1;
-      }
-      .pin-card:hover .btn-shop {
-        transform: translateY(0);
       }
       .card-img-wrap {
         position: relative;
@@ -353,7 +353,9 @@
         width: 100%;
         display: block;
         object-fit: cover;
-        transition: transform 0.4s ease;
+        min-height: 180px;
+        max-height: 380px;
+        transition: transform 0.4s;
       }
       .pin-card:hover .card-img-wrap img {
         transform: scale(1.05);
@@ -407,7 +409,6 @@
         border-radius: 100%;
         border: none;
         font-size: 13px;
-        font-weight: 700;
         cursor: pointer;
         opacity: 0;
         transition: opacity 0.25s, transform 0.2s;
@@ -497,7 +498,6 @@
       .price-now {
         font-size: 17px;
         font-weight: 700;
-        color: var(--dark);
       }
       .price-old {
         font-size: 13px;
@@ -556,8 +556,45 @@
         border-color: var(--pin-red);
       }
 
-      /* ── EMPTY STATE ── */
+      /* LOADING */
+      .loading-screen {
+        position: fixed;
+        inset: 0;
+        background: var(--cream);
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+        transition: opacity 0.4s;
+      }
+      .loading-screen.hidden {
+        opacity: 0;
+        pointer-events: none;
+      }
+      .spinner {
+        width: 48px;
+        height: 48px;
+        border: 4px solid var(--border);
+        border-top-color: var(--pin-red);
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      .loading-screen p {
+        font-family: "Playfair Display", serif;
+        font-size: 18px;
+        color: var(--mid);
+      }
+
+      /* EMPTY STATE */
       .empty-state {
+        column-span: all;
         text-align: center;
         padding: 80px 20px;
         color: var(--light-text);
@@ -566,6 +603,7 @@
         font-size: 48px;
         margin-bottom: 16px;
         opacity: 0.4;
+        display: block;
       }
       .empty-state h3 {
         font-family: "Playfair Display", serif;
@@ -593,7 +631,7 @@
         transform: translateY(-2px);
       }
 
-      /* ── ADMIN MODAL ── */
+      /* MODAL */
       .modal-overlay {
         position: fixed;
         inset: 0;
@@ -627,7 +665,7 @@
         transform: translateY(0) scale(1);
       }
       .modal-header {
-        padding: 28px 32px 0;
+        padding: 28px 32px 20px;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -636,7 +674,6 @@
         background: #fff;
         z-index: 10;
         border-bottom: 1px solid var(--border);
-        padding-bottom: 20px;
       }
       .modal-header h3 {
         font-family: "Playfair Display", serif;
@@ -662,8 +699,6 @@
       .modal-body {
         padding: 28px 32px 32px;
       }
-
-      /* FORM */
       .form-group {
         margin-bottom: 20px;
       }
@@ -692,8 +727,7 @@
         resize: none;
       }
       .form-group input:focus,
-      .form-group select:focus,
-      .form-group textarea:focus {
+      .form-group select:focus {
         border-color: var(--rust);
         background: #fff;
       }
@@ -707,8 +741,6 @@
         color: var(--light-text);
         margin-top: 5px;
       }
-
-      /* Image preview */
       .img-preview {
         width: 100%;
         height: 160px;
@@ -735,8 +767,6 @@
         font-size: 28px;
         opacity: 0.4;
       }
-
-      /* Badge selector */
       .badge-selector {
         display: flex;
         gap: 10px;
@@ -752,25 +782,41 @@
         transition: all 0.2s;
         font-family: "DM Sans", sans-serif;
       }
-      .badge-opt:hover {
-        border-color: var(--mid);
-      }
-      .badge-opt.selected-deal {
-        background: var(--orange);
-        border-color: var(--orange);
-        color: #fff;
-      }
-      .badge-opt.selected-new {
-        background: var(--green);
-        border-color: var(--green);
-        color: #fff;
-      }
-      .badge-opt.selected-none {
+      .badge-opt.sel-none {
         background: var(--dark);
         border-color: var(--dark);
         color: #fff;
       }
-
+      .badge-opt.sel-deal {
+        background: var(--orange);
+        border-color: var(--orange);
+        color: #fff;
+      }
+      .badge-opt.sel-new {
+        background: var(--green);
+        border-color: var(--green);
+        color: #fff;
+      }
+      .star-input {
+        display: flex;
+        gap: 6px;
+      }
+      .star-input button {
+        background: none;
+        border: none;
+        font-size: 22px;
+        cursor: pointer;
+        color: #ddd;
+        transition: color 0.15s, transform 0.15s;
+        padding: 0;
+      }
+      .star-input button.active {
+        color: var(--orange);
+      }
+      .star-input button:hover {
+        transform: scale(1.2);
+        color: var(--orange);
+      }
       .btn-submit {
         width: 100%;
         padding: 15px;
@@ -789,96 +835,13 @@
         transform: translateY(-2px);
         box-shadow: 0 8px 28px rgba(192, 57, 43, 0.4);
       }
-
-      /* Star rating input */
-      .star-input {
-        display: flex;
-        gap: 6px;
-      }
-      .star-input button {
-        background: none;
-        border: none;
-        font-size: 22px;
-        cursor: pointer;
-        color: #ddd;
-        transition: color 0.15s, transform 0.15s;
-        padding: 0;
-      }
-      .star-input button.active,
-      .star-input button:hover {
-        color: var(--orange);
-      }
-      .star-input button:hover {
-        transform: scale(1.2);
+      .btn-submit:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
       }
 
-      /* Toast */
-      .toast {
-        position: fixed;
-        bottom: 28px;
-        left: 50%;
-        transform: translateX(-50%) translateY(20px);
-        background: var(--dark);
-        color: #fff;
-        padding: 12px 24px;
-        border-radius: 100px;
-        font-size: 13px;
-        font-weight: 600;
-        z-index: 9999;
-        opacity: 0;
-        transition: all 0.3s;
-        pointer-events: none;
-        white-space: nowrap;
-      }
-      .toast.show {
-        opacity: 1;
-        transform: translateX(-50%) translateY(0);
-      }
-      .toast.success {
-        background: var(--green);
-      }
-      .toast.error {
-        background: var(--rust);
-      }
-
-      footer {
-        background: var(--dark);
-        color: rgba(255, 255, 255, 0.5);
-        text-align: center;
-        padding: 30px;
-        font-size: 13px;
-      }
-      footer a {
-        color: var(--accent);
-        text-decoration: none;
-      }
-      footer strong {
-        color: rgba(255, 255, 255, 0.85);
-      }
-      .scroll-top {
-        position: fixed;
-        bottom: 28px;
-        right: 28px;
-        width: 46px;
-        height: 46px;
-        background: var(--pin-red);
-        color: #fff;
-        border: none;
-        border-radius: 100%;
-        font-size: 16px;
-        cursor: pointer;
-        box-shadow: 0 4px 16px rgba(230, 0, 35, 0.4);
-        transition: transform 0.2s;
-        z-index: 999;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-      .scroll-top:hover {
-        transform: scale(1.1) translateY(-2px);
-      }
-
-      /* Confirm delete */
+      /* CONFIRM */
       .confirm-overlay {
         position: fixed;
         inset: 0;
@@ -938,12 +901,12 @@
         border: 2px solid transparent;
         transition: all 0.2s;
       }
-      .btn-cancel {
+      .btn-cancel-c {
         background: var(--warm);
         color: var(--mid);
-        border-color: var(--border);
+        border-color: var(--border) !important;
       }
-      .btn-cancel:hover {
+      .btn-cancel-c:hover {
         background: var(--border);
       }
       .btn-confirm-del {
@@ -954,20 +917,111 @@
         background: #a93226;
       }
 
+      /* TOAST */
+      .toast {
+        position: fixed;
+        bottom: 28px;
+        left: 50%;
+        transform: translateX(-50%) translateY(20px);
+        background: var(--dark);
+        color: #fff;
+        padding: 12px 24px;
+        border-radius: 100px;
+        font-size: 13px;
+        font-weight: 600;
+        z-index: 9999;
+        opacity: 0;
+        transition: all 0.3s;
+        pointer-events: none;
+        white-space: nowrap;
+      }
+      .toast.show {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+      .toast.success {
+        background: var(--green);
+      }
+      .toast.error {
+        background: var(--rust);
+      }
+
+      /* SHARED NOTICE */
+      .shared-notice {
+        background: linear-gradient(135deg, #1a1210, #3d2620);
+        color: rgba(255, 255, 255, 0.7);
+        text-align: center;
+        padding: 10px 20px;
+        font-size: 12px;
+        letter-spacing: 0.5px;
+      }
+      .shared-notice strong {
+        color: var(--accent);
+      }
+
+      footer {
+        background: var(--dark);
+        color: rgba(255, 255, 255, 0.5);
+        text-align: center;
+        padding: 30px;
+        font-size: 13px;
+      }
+      footer a {
+        color: var(--accent);
+        text-decoration: none;
+      }
+      footer strong {
+        color: rgba(255, 255, 255, 0.85);
+      }
+      .scroll-top {
+        position: fixed;
+        bottom: 28px;
+        right: 28px;
+        width: 46px;
+        height: 46px;
+        background: var(--pin-red);
+        color: #fff;
+        border: none;
+        border-radius: 100%;
+        font-size: 16px;
+        cursor: pointer;
+        box-shadow: 0 4px 16px rgba(230, 0, 35, 0.4);
+        transition: transform 0.2s;
+        z-index: 999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .scroll-top:hover {
+        transform: scale(1.1) translateY(-2px);
+      }
+
       @media (max-width: 640px) {
         .form-row {
           grid-template-columns: 1fr;
         }
         .modal-body {
-          padding: 20px 20px 28px;
+          padding: 20px;
         }
         .modal-header {
-          padding: 20px 20px 16px;
+          padding: 20px;
         }
       }
     </style>
   </head>
   <body>
+    <!-- LOADING -->
+    <div class="loading-screen" id="loadingScreen">
+      <div class="spinner"></div>
+      <p>Loading your shop…</p>
+    </div>
+
+    <!-- SHARED NOTICE -->
+    <div class="shared-notice">
+      <strong>🌐 Shared Shop</strong> — Products added here are visible to
+      everyone who opens this page
+    </div>
+
     <!-- NAV -->
     <nav>
       <a href="#" class="logo">Pin<span>Shop</span></a>
@@ -995,8 +1049,8 @@
       <div class="hero-tag">✦ Curated Picks · Amazon Affiliate</div>
       <h1>Things Worth<br /><em>Obsessing Over</em></h1>
       <p>
-        Hand-picked products — click to shop on Amazon, or save the pin to your
-        boards.
+        Hand-picked products I love — click to shop on Amazon, or save the pin
+        to your boards.
       </p>
       <a href="#products" class="hero-cta">
         <i class="fas fa-shopping-bag"></i> Browse All Finds
@@ -1024,12 +1078,11 @@
 
     <div class="section-header">
       <h2>My Curated Finds</h2>
-      <span id="countLabel">0 items</span>
+      <span id="countLabel">Loading…</span>
     </div>
 
     <div class="masonry" id="masonryGrid"></div>
 
-    <!-- FOOTER -->
     <footer>
       <p>
         <strong>PinShop</strong> · As an Amazon Associate I earn from qualifying
@@ -1045,7 +1098,7 @@
       <i class="fas fa-arrow-up"></i>
     </button>
 
-    <!-- ═══════════════════════════════════════ ADMIN MODAL -->
+    <!-- ═══ ADMIN MODAL ═══ -->
     <div
       class="modal-overlay"
       id="adminModal"
@@ -1065,7 +1118,6 @@
               placeholder="e.g. Minimalist Ceramic Lamp"
             />
           </div>
-
           <div class="form-row">
             <div class="form-group">
               <label>Category *</label>
@@ -1084,7 +1136,7 @@
               <label>Badge</label>
               <div class="badge-selector">
                 <button
-                  class="badge-opt selected-none"
+                  class="badge-opt sel-none"
                   onclick="selectBadge('none',this)"
                 >
                   None
@@ -1098,7 +1150,6 @@
               </div>
             </div>
           </div>
-
           <div class="form-row">
             <div class="form-group">
               <label>Price *</label>
@@ -1109,10 +1160,10 @@
                 >Original Price
                 <span
                   style="
-                    color: var(--light-text);
                     font-weight: 400;
                     text-transform: none;
                     letter-spacing: 0;
+                    color: var(--light-text);
                   "
                   >(optional)</span
                 ></label
@@ -1120,34 +1171,22 @@
               <input type="text" id="f_oldPrice" placeholder="$79.99" />
             </div>
           </div>
-
-          <div class="form-group">
-            <label>Star Rating</label>
-            <div class="star-input" id="starInput">
-              <button onclick="setRating(1)">★</button>
-              <button onclick="setRating(2)">★</button>
-              <button onclick="setRating(3)">★</button>
-              <button onclick="setRating(4)">★</button>
-              <button onclick="setRating(5)">★</button>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Star Rating</label>
+              <div class="star-input" id="starInput">
+                <button onclick="setRating(1)">★</button>
+                <button onclick="setRating(2)">★</button>
+                <button onclick="setRating(3)">★</button>
+                <button onclick="setRating(4)">★</button>
+                <button onclick="setRating(5)">★</button>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Review Count</label>
+              <input type="text" id="f_reviews" placeholder="1.5k" />
             </div>
           </div>
-
-          <div class="form-group">
-            <label
-              >Review Count
-              <span
-                style="
-                  color: var(--light-text);
-                  font-weight: 400;
-                  text-transform: none;
-                  letter-spacing: 0;
-                "
-                >(e.g. 2.3k)</span
-              ></label
-            >
-            <input type="text" id="f_reviews" placeholder="1.5k" />
-          </div>
-
           <div class="form-group">
             <label>Product Image URL *</label>
             <input
@@ -1161,10 +1200,10 @@
               <span>Paste an image URL above to preview</span>
             </div>
             <p class="form-hint">
-              Tip: Use Unsplash, Amazon product image, or any direct image link.
+              Tip: Use any direct image link (Unsplash, Amazon product image,
+              etc.)
             </p>
           </div>
-
           <div class="form-group">
             <label>Amazon Affiliate Link *</label>
             <input
@@ -1173,31 +1212,29 @@
               placeholder="https://www.amazon.com/dp/ASIN?tag=YOURTAG-20"
             />
             <p class="form-hint">
-              Your full Amazon affiliate URL including your tag.
+              Your full Amazon affiliate URL including your tracking tag.
             </p>
           </div>
-
           <div class="form-group">
             <label
               >Pinterest Save URL
               <span
                 style="
-                  color: var(--light-text);
                   font-weight: 400;
                   text-transform: none;
                   letter-spacing: 0;
+                  color: var(--light-text);
                 "
-                >(optional — auto-generated if empty)</span
+                >(optional)</span
               ></label
             >
             <input
               type="text"
               id="f_pinterestUrl"
-              placeholder="https://pinterest.com/pin/create/button/?url=…"
+              placeholder="Auto-generated if left empty"
             />
           </div>
-
-          <button class="btn-submit" onclick="submitProduct()">
+          <button class="btn-submit" id="submitBtn" onclick="submitProduct()">
             <span id="submitBtnText">✦ Add to My Shop</span>
           </button>
         </div>
@@ -1209,11 +1246,11 @@
       <div class="confirm-box">
         <h4>Remove this product?</h4>
         <p>
-          This will permanently remove the product from your shop. This action
-          cannot be undone.
+          This will remove the product for <strong>everyone</strong> who visits
+          this shop.
         </p>
         <div class="confirm-actions">
-          <button class="btn-cancel" onclick="closeConfirm()">Cancel</button>
+          <button class="btn-cancel-c" onclick="closeConfirm()">Cancel</button>
           <button class="btn-confirm-del" onclick="confirmDelete()">
             Yes, Remove
           </button>
@@ -1226,10 +1263,12 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-      // ═══════════════════════════════════════════════
-      // STATE
-      // ═══════════════════════════════════════════════
-      const STORAGE_KEY = "pinshop_products_v2";
+      // ═══════════════════════════════════════════════════════
+      // SHARED STORAGE  — window.storage (shared: true)
+      // Products are visible to ALL users
+      // ═══════════════════════════════════════════════════════
+      const STORAGE_KEY = "pinshop_shared_products_v1";
+
       let products = [];
       let currentCat = "all";
       let selectedBadge = "none";
@@ -1238,198 +1277,188 @@
       let editMode = false;
       let editId = null;
 
-      const SAMPLE_PRODUCTS = [
-        {
-          id: uuid(),
-          title: "Minimalist Ceramic Table Lamp",
-          category: "home",
-          price: "$49.99",
-          oldPrice: "$79.99",
-          rating: 5,
-          reviews: "2.3k",
-          badge: "deal",
-          image:
-            "https://images.unsplash.com/photo-1540932239986-30128078f3c5?w=400&q=80",
-          amazonUrl: "https://www.amazon.com/dp/YOURCODE?tag=YOURTAG-20",
-          pinterestUrl: "",
-        },
-        {
-          id: uuid(),
-          title: "Noise Cancelling Wireless Earbuds",
-          category: "tech",
-          price: "$89.00",
-          oldPrice: "$120.00",
-          rating: 5,
-          reviews: "8.1k",
-          badge: "",
-          image:
-            "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=400&q=80",
-          amazonUrl: "https://www.amazon.com/dp/YOURCODE?tag=YOURTAG-20",
-          pinterestUrl: "",
-        },
-        {
-          id: uuid(),
-          title: "Korean Glass Skin Serum Set",
-          category: "beauty",
-          price: "$34.00",
-          oldPrice: "",
-          rating: 5,
-          reviews: "5.4k",
-          badge: "new",
-          image:
-            "https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=400&q=80",
-          amazonUrl: "https://www.amazon.com/dp/YOURCODE?tag=YOURTAG-20",
-          pinterestUrl: "",
-        },
-        {
-          id: uuid(),
-          title: 'Cast Iron Skillet — Pre-Seasoned 12"',
-          category: "kitchen",
-          price: "$29.95",
-          oldPrice: "$44.00",
-          rating: 4,
-          reviews: "12.5k",
-          badge: "deal",
-          image:
-            "https://images.unsplash.com/photo-1585442558990-13acef8b9ca8?w=400&q=80",
-          amazonUrl: "https://www.amazon.com/dp/YOURCODE?tag=YOURTAG-20",
-          pinterestUrl: "",
-        },
-        {
-          id: uuid(),
-          title: "Adjustable Resistance Band Set",
-          category: "fitness",
-          price: "$22.99",
-          oldPrice: "",
-          rating: 5,
-          reviews: "3.8k",
-          badge: "",
-          image:
-            "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=400&q=80",
-          amazonUrl: "https://www.amazon.com/dp/YOURCODE?tag=YOURTAG-20",
-          pinterestUrl: "",
-        },
-        {
-          id: uuid(),
-          title: "Linen Wide Leg Trousers",
-          category: "fashion",
-          price: "$58.00",
-          oldPrice: "$85.00",
-          rating: 5,
-          reviews: "1.2k",
-          badge: "deal",
-          image:
-            "https://images.unsplash.com/photo-1551854838-212c9a5bef73?w=400&q=80",
-          amazonUrl: "https://www.amazon.com/dp/YOURCODE?tag=YOURTAG-20",
-          pinterestUrl: "",
-        },
-        {
-          id: uuid(),
-          title: "Smart LED Desk Lamp with USB-C",
-          category: "tech",
-          price: "$45.00",
-          oldPrice: "$60.00",
-          rating: 5,
-          reviews: "4.6k",
-          badge: "",
-          image:
-            "https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?w=400&q=80",
-          amazonUrl: "https://www.amazon.com/dp/YOURCODE?tag=YOURTAG-20",
-          pinterestUrl: "",
-        },
-        {
-          id: uuid(),
-          title: "Boho Macramé Wall Hanging",
-          category: "home",
-          price: "$38.00",
-          oldPrice: "",
-          rating: 5,
-          reviews: "980",
-          badge: "new",
-          image:
-            "https://images.unsplash.com/photo-1567016432779-094069958ea5?w=400&q=80",
-          amazonUrl: "https://www.amazon.com/dp/YOURCODE?tag=YOURTAG-20",
-          pinterestUrl: "",
-        },
-        {
-          id: uuid(),
-          title: "Stainless Steel Water Bottle 40oz",
-          category: "fitness",
-          price: "$32.00",
-          oldPrice: "",
-          rating: 5,
-          reviews: "22k",
-          badge: "",
-          image:
-            "https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=400&q=80",
-          amazonUrl: "https://www.amazon.com/dp/YOURCODE?tag=YOURTAG-20",
-          pinterestUrl: "",
-        },
-        {
-          id: uuid(),
-          title: "Bamboo Cutting Board Set",
-          category: "kitchen",
-          price: "$24.99",
-          oldPrice: "$35.00",
-          rating: 5,
-          reviews: "7.4k",
-          badge: "",
-          image:
-            "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&q=80",
-          amazonUrl: "https://www.amazon.com/dp/YOURCODE?tag=YOURTAG-20",
-          pinterestUrl: "",
-        },
-      ];
-
       function uuid() {
         return (
           "p_" + Math.random().toString(36).substr(2, 9) + "_" + Date.now()
         );
       }
 
-      function loadProducts() {
+      // ── Load from shared storage ──
+      async function loadProducts() {
         try {
-          const stored = localStorage.getItem(STORAGE_KEY);
-          products = stored ? JSON.parse(stored) : [...SAMPLE_PRODUCTS];
+          const result = await window.storage.get(STORAGE_KEY, true); // shared=true
+          if (result && result.value) {
+            products = JSON.parse(result.value);
+          } else {
+            products = getDefaultProducts();
+            await saveProducts(); // seed shared storage with defaults
+          }
         } catch (e) {
-          products = [...SAMPLE_PRODUCTS];
+          // Key doesn't exist yet — seed with defaults
+          products = getDefaultProducts();
+          try {
+            await saveProducts();
+          } catch (_) {}
+        }
+        hideLoading();
+        applyFilters();
+      }
+
+      // ── Save to shared storage ──
+      async function saveProducts() {
+        try {
+          await window.storage.set(STORAGE_KEY, JSON.stringify(products), true); // shared=true
+        } catch (e) {
+          console.warn("Shared storage error:", e);
         }
       }
 
-      function saveProducts() {
-        try {
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(products));
-        } catch (e) {
-          console.warn("Storage unavailable");
-        }
+      function hideLoading() {
+        const el = document.getElementById("loadingScreen");
+        el.classList.add("hidden");
+        setTimeout(() => el.remove(), 500);
       }
 
-      // ═══════════════════════════════════════════════
+      // ── Default sample products ──
+      function getDefaultProducts() {
+        return [
+          {
+            id: uuid(),
+            title: "Minimalist Ceramic Table Lamp",
+            category: "home",
+            price: "$49.99",
+            oldPrice: "$79.99",
+            rating: 5,
+            reviews: "2.3k",
+            badge: "deal",
+            image:
+              "https://images.unsplash.com/photo-1540932239986-30128078f3c5?w=400&q=80",
+            amazonUrl: "https://www.amazon.com/dp/YOURCODE?tag=YOURTAG-20",
+            pinterestUrl: "",
+          },
+          {
+            id: uuid(),
+            title: "Noise Cancelling Wireless Earbuds",
+            category: "tech",
+            price: "$89.00",
+            oldPrice: "$120.00",
+            rating: 5,
+            reviews: "8.1k",
+            badge: "",
+            image:
+              "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=400&q=80",
+            amazonUrl: "https://www.amazon.com/dp/YOURCODE?tag=YOURTAG-20",
+            pinterestUrl: "",
+          },
+          {
+            id: uuid(),
+            title: "Korean Glass Skin Serum Set",
+            category: "beauty",
+            price: "$34.00",
+            oldPrice: "",
+            rating: 5,
+            reviews: "5.4k",
+            badge: "new",
+            image:
+              "https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=400&q=80",
+            amazonUrl: "https://www.amazon.com/dp/YOURCODE?tag=YOURTAG-20",
+            pinterestUrl: "",
+          },
+          {
+            id: uuid(),
+            title: 'Cast Iron Skillet 12"',
+            category: "kitchen",
+            price: "$29.95",
+            oldPrice: "$44.00",
+            rating: 4,
+            reviews: "12.5k",
+            badge: "deal",
+            image:
+              "https://images.unsplash.com/photo-1585442558990-13acef8b9ca8?w=400&q=80",
+            amazonUrl: "https://www.amazon.com/dp/YOURCODE?tag=YOURTAG-20",
+            pinterestUrl: "",
+          },
+          {
+            id: uuid(),
+            title: "Adjustable Resistance Band Set",
+            category: "fitness",
+            price: "$22.99",
+            oldPrice: "",
+            rating: 5,
+            reviews: "3.8k",
+            badge: "",
+            image:
+              "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=400&q=80",
+            amazonUrl: "https://www.amazon.com/dp/YOURCODE?tag=YOURTAG-20",
+            pinterestUrl: "",
+          },
+          {
+            id: uuid(),
+            title: "Linen Wide Leg Trousers",
+            category: "fashion",
+            price: "$58.00",
+            oldPrice: "$85.00",
+            rating: 5,
+            reviews: "1.2k",
+            badge: "deal",
+            image:
+              "https://images.unsplash.com/photo-1551854838-212c9a5bef73?w=400&q=80",
+            amazonUrl: "https://www.amazon.com/dp/YOURCODE?tag=YOURTAG-20",
+            pinterestUrl: "",
+          },
+          {
+            id: uuid(),
+            title: "Boho Macramé Wall Hanging",
+            category: "home",
+            price: "$38.00",
+            oldPrice: "",
+            rating: 5,
+            reviews: "980",
+            badge: "new",
+            image:
+              "https://images.unsplash.com/photo-1567016432779-094069958ea5?w=400&q=80",
+            amazonUrl: "https://www.amazon.com/dp/YOURCODE?tag=YOURTAG-20",
+            pinterestUrl: "",
+          },
+          {
+            id: uuid(),
+            title: "Stainless Steel Water Bottle 40oz",
+            category: "fitness",
+            price: "$32.00",
+            oldPrice: "",
+            rating: 5,
+            reviews: "22k",
+            badge: "",
+            image:
+              "https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=400&q=80",
+            amazonUrl: "https://www.amazon.com/dp/YOURCODE?tag=YOURTAG-20",
+            pinterestUrl: "",
+          },
+        ];
+      }
+
+      // ═══════════════════════════════════════════════════════
       // RENDER
-      // ═══════════════════════════════════════════════
+      // ═══════════════════════════════════════════════════════
       function starsHtml(r) {
         let s = "";
         for (let i = 1; i <= 5; i++) s += i <= r ? "★" : "☆";
         return s;
       }
-
       function calcSave(price, old) {
         if (!old) return "";
-        const p = parseFloat(price.replace(/[^0-9.]/g, ""));
-        const o = parseFloat(old.replace(/[^0-9.]/g, ""));
+        const p = parseFloat(price.replace(/[^0-9.]/g, "")),
+          o = parseFloat(old.replace(/[^0-9.]/g, ""));
         if (!p || !o || o <= p) return "";
         return `Save ${Math.round((1 - p / o) * 100)}%`;
       }
-
       function buildPinUrl(p) {
         if (p.pinterestUrl) return p.pinterestUrl;
-        const base = "https://pinterest.com/pin/create/button/";
-        const params = new URLSearchParams({
-          url: p.amazonUrl,
-          description: p.title,
-          media: p.image,
-        });
-        return base + "?" + params.toString();
+        return `https://pinterest.com/pin/create/button/?url=${encodeURIComponent(
+          p.amazonUrl
+        )}&description=${encodeURIComponent(
+          p.title
+        )}&media=${encodeURIComponent(p.image)}`;
       }
 
       function renderCard(p, delay) {
@@ -1440,20 +1469,15 @@
             : p.badge === "new"
             ? `<span class="badge-new">✦ New</span>`
             : "";
-        const oldPriceHtml = p.oldPrice
-          ? `<span class="price-old">${p.oldPrice}</span>`
-          : "";
-        const saveHtml = save ? `<span class="price-save">${save}</span>` : "";
-        const reviewsHtml = p.reviews ? `<span>(${p.reviews})</span>` : "";
-        const pinUrl = buildPinUrl(p);
-
-        return `<div class="pin-card" data-category="${
-          p.category
-        }" data-title="${p.title.toLowerCase()}" style="animation-delay:${delay}s">
+        const pinUrl = buildPinUrl(p).replace(/'/g, "%27");
+        return `
+  <div class="pin-card" data-category="${
+    p.category
+  }" data-title="${p.title.toLowerCase()}" style="animation-delay:${delay}s">
     <div class="card-img-wrap">
       <img src="${p.image}" alt="${
           p.title
-        }" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1525328437458-0c4d4db7cab4?w=400&q=80'" style="min-height:200px;max-height:380px;"/>
+        }" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1525328437458-0c4d4db7cab4?w=400&q=80'" />
       <div class="overlay">
         <a href="${
           p.amazonUrl
@@ -1462,10 +1486,7 @@
         </a>
       </div>
       ${badgeHtml}
-      <button class="save-btn" onclick="pinIt(event,'${pinUrl.replace(
-        /'/g,
-        "&apos;"
-      )}')" title="Save to Pinterest">
+      <button class="save-btn" onclick="pinIt(event,'${pinUrl}')" title="Save to Pinterest">
         <i class="fab fa-pinterest-p"></i>
       </button>
       <button class="delete-btn" onclick="askDelete(event,'${
@@ -1478,9 +1499,13 @@
       <div class="card-category">${p.category}</div>
       <div class="card-title">${p.title}</div>
       <div class="card-price-row">
-        <span class="price-now">${p.price}</span>${oldPriceHtml}${saveHtml}
+        <span class="price-now">${p.price}</span>
+        ${p.oldPrice ? `<span class="price-old">${p.oldPrice}</span>` : ""}
+        ${save ? `<span class="price-save">${save}</span>` : ""}
       </div>
-      <div class="stars">${starsHtml(p.rating)}${reviewsHtml}</div>
+      <div class="stars">${starsHtml(p.rating)}${
+          p.reviews ? `<span>(${p.reviews})</span>` : ""
+        }</div>
       <div class="card-footer-links">
         <a href="${
           p.amazonUrl
@@ -1506,19 +1531,17 @@
             p.category.includes(search);
           return catOk && searchOk;
         });
-
         const grid = document.getElementById("masonryGrid");
-
         if (filtered.length === 0) {
-          grid.innerHTML = `<div class="empty-state" style="column-span:all">
+          grid.innerHTML = `<div class="empty-state">
       <i class="fas fa-box-open"></i>
-      <h3>No products yet</h3>
-      <p>Add your first product using the button above.</p>
+      <h3>No products here yet</h3>
+      <p>Be the first to add a product to the shared shop!</p>
       <button onclick="openAdmin()"><i class="fas fa-plus"></i> Add Product</button>
     </div>`;
         } else {
           grid.innerHTML = filtered
-            .map((p, i) => renderCard(p, i * 0.05))
+            .map((p, i) => renderCard(p, i * 0.04))
             .join("");
         }
         document.getElementById("countLabel").textContent = `${
@@ -1535,9 +1558,9 @@
         applyFilters();
       }
 
-      // ═══════════════════════════════════════════════
+      // ═══════════════════════════════════════════════════════
       // ADMIN MODAL
-      // ═══════════════════════════════════════════════
+      // ═══════════════════════════════════════════════════════
       function openAdmin(id) {
         editMode = !!id;
         editId = id || null;
@@ -1546,8 +1569,7 @@
           : "✦ Add New Product";
         document.getElementById("submitBtnText").textContent = editMode
           ? "Save Changes"
-          : "✦ Add to My Shop";
-
+          : "✦ Add to Shared Shop";
         if (editMode) {
           const p = products.find((x) => x.id === id);
           if (!p) return;
@@ -1564,14 +1586,16 @@
           selectedRating = p.rating || 5;
           previewImg();
         } else {
-          document.getElementById("f_title").value = "";
-          document.getElementById("f_category").value = "";
-          document.getElementById("f_price").value = "";
-          document.getElementById("f_oldPrice").value = "";
-          document.getElementById("f_reviews").value = "";
-          document.getElementById("f_image").value = "";
-          document.getElementById("f_amazonUrl").value = "";
-          document.getElementById("f_pinterestUrl").value = "";
+          [
+            "f_title",
+            "f_category",
+            "f_price",
+            "f_oldPrice",
+            "f_reviews",
+            "f_image",
+            "f_amazonUrl",
+            "f_pinterestUrl",
+          ].forEach((id) => (document.getElementById(id).value = ""));
           selectedBadge = "none";
           selectedRating = 5;
           document.getElementById("imgPreview").innerHTML =
@@ -1582,54 +1606,44 @@
         document.getElementById("adminModal").classList.add("open");
         document.body.style.overflow = "hidden";
       }
-
       function closeAdmin() {
         document.getElementById("adminModal").classList.remove("open");
         document.body.style.overflow = "";
       }
-
       function closeAdminOutside(e) {
         if (e.target.id === "adminModal") closeAdmin();
       }
-
-      function selectBadge(val, el) {
+      function selectBadge(val) {
         selectedBadge = val;
         updateBadgeUI();
       }
-
       function updateBadgeUI() {
-        document.querySelectorAll(".badge-opt").forEach((b) => {
-          b.classList.remove("selected-deal", "selected-new", "selected-none");
-        });
-        const els = document.querySelectorAll(".badge-opt");
-        if (selectedBadge === "none") els[0].classList.add("selected-none");
-        if (selectedBadge === "deal") els[1].classList.add("selected-deal");
-        if (selectedBadge === "new") els[2].classList.add("selected-new");
+        const opts = document.querySelectorAll(".badge-opt");
+        opts.forEach((b) => (b.className = "badge-opt"));
+        if (selectedBadge === "none") opts[0].classList.add("sel-none");
+        if (selectedBadge === "deal") opts[1].classList.add("sel-deal");
+        if (selectedBadge === "new") opts[2].classList.add("sel-new");
       }
-
       function setRating(n) {
         selectedRating = n;
         updateStarUI();
       }
-
       function updateStarUI() {
-        document.querySelectorAll("#starInput button").forEach((b, i) => {
-          b.classList.toggle("active", i < selectedRating);
-        });
+        document
+          .querySelectorAll("#starInput button")
+          .forEach((b, i) => b.classList.toggle("active", i < selectedRating));
       }
-
       function previewImg() {
         const url = document.getElementById("f_image").value.trim();
-        const preview = document.getElementById("imgPreview");
-        if (url) {
-          preview.innerHTML = `<img src="${url}" alt="preview" onerror="this.parentElement.innerHTML='<i class=\'fas fa-exclamation-triangle\'></i><span>Could not load image</span>'"/>`;
-        } else {
-          preview.innerHTML =
+        const p = document.getElementById("imgPreview");
+        if (url)
+          p.innerHTML = `<img src="${url}" alt="preview" onerror="this.parentElement.innerHTML='<i class=\\'fas fa-exclamation-triangle\\'></i><span>Could not load image</span>'"/>`;
+        else
+          p.innerHTML =
             '<i class="fas fa-image"></i><span>Paste an image URL above to preview</span>';
-        }
       }
 
-      function submitProduct() {
+      async function submitProduct() {
         const title = document.getElementById("f_title").value.trim();
         const category = document.getElementById("f_category").value;
         const price = document.getElementById("f_price").value.trim();
@@ -1640,7 +1654,6 @@
         const pinterestUrl = document
           .getElementById("f_pinterestUrl")
           .value.trim();
-
         if (!title) {
           showToast("Please enter a product name", "error");
           return;
@@ -1662,9 +1675,13 @@
           return;
         }
 
+        const btn = document.getElementById("submitBtn");
+        btn.disabled = true;
+        document.getElementById("submitBtnText").textContent = "Saving…";
+
         if (editMode && editId) {
           const idx = products.findIndex((p) => p.id === editId);
-          if (idx > -1) {
+          if (idx > -1)
             products[idx] = {
               ...products[idx],
               title,
@@ -1678,10 +1695,8 @@
               badge: selectedBadge === "none" ? "" : selectedBadge,
               rating: selectedRating,
             };
-          }
-          showToast("Product updated!", "success");
         } else {
-          const product = {
+          products.unshift({
             id: uuid(),
             title,
             category,
@@ -1693,66 +1708,62 @@
             pinterestUrl,
             badge: selectedBadge === "none" ? "" : selectedBadge,
             rating: selectedRating,
-          };
-          products.unshift(product);
-          showToast("Product added to your shop!", "success");
+          });
         }
 
-        saveProducts();
+        await saveProducts();
         applyFilters();
         closeAdmin();
+        btn.disabled = false;
+        showToast(
+          editMode
+            ? "Product updated for everyone!"
+            : "Product added — everyone can see it now!",
+          "success"
+        );
       }
 
-      // ═══════════════════════════════════════════════
+      // ═══════════════════════════════════════════════════════
       // DELETE
-      // ═══════════════════════════════════════════════
+      // ═══════════════════════════════════════════════════════
       function askDelete(e, id) {
         e.preventDefault();
         e.stopPropagation();
         deleteTargetId = id;
         document.getElementById("confirmOverlay").classList.add("open");
       }
-
       function closeConfirm() {
         deleteTargetId = null;
         document.getElementById("confirmOverlay").classList.remove("open");
       }
-
-      function confirmDelete() {
+      async function confirmDelete() {
         if (!deleteTargetId) return;
         products = products.filter((p) => p.id !== deleteTargetId);
-        saveProducts();
+        await saveProducts();
         applyFilters();
         closeConfirm();
-        showToast("Product removed", "success");
+        showToast("Product removed for everyone", "success");
       }
 
-      // ═══════════════════════════════════════════════
+      // ═══════════════════════════════════════════════════════
       // PINTEREST
-      // ═══════════════════════════════════════════════
+      // ═══════════════════════════════════════════════════════
       function pinIt(e, url) {
         e.preventDefault();
         e.stopPropagation();
         window.open(decodeURIComponent(url), "_blank");
       }
 
-      // ═══════════════════════════════════════════════
       // TOAST
-      // ═══════════════════════════════════════════════
       function showToast(msg, type = "") {
         const t = document.getElementById("toast");
         t.textContent = msg;
         t.className = "toast show" + (type ? " " + type : "");
-        setTimeout(() => {
-          t.classList.remove("show");
-        }, 3000);
+        setTimeout(() => t.classList.remove("show"), 3500);
       }
 
-      // ═══════════════════════════════════════════════
-      // INIT
-      // ═══════════════════════════════════════════════
+      // ═══════ INIT ═══════
       loadProducts();
-      applyFilters();
     </script>
   </body>
 </html>
